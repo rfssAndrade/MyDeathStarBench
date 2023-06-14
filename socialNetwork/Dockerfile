@@ -1,4 +1,4 @@
-FROM yg397/thrift-microservice-deps:xenial AS builder
+FROM andraderf/thriftot AS builder
 
 ARG LIB_REDIS_PLUS_PLUS_VERSION=1.2.3
 
@@ -18,11 +18,12 @@ RUN cd /social-network-microservices \
     && make -j$(nproc) \
     && make install
 
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 # Copy compiled C++ binaries and dependencies
 COPY --from=builder /usr/local/bin/* /usr/local/bin/
 COPY --from=builder /usr/local/lib/* /usr/local/lib/
+COPY --from=builder /usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu
 
 # Install system dependencies
 RUN apt-get update && \
