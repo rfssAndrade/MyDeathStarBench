@@ -16,7 +16,7 @@ ARG LIB_REDIS_PLUS_PLUS_VERSION=1.2.3
 ARG BUILD_DEPS="ca-certificates g++ cmake wget git libmemcached-dev automake bison flex libboost-all-dev libevent-dev libssl-dev libtool make pkg-config librabbitmq-dev python3-dev python3-pip python3-setuptools python3-wheel"
 
 RUN apt-get update \
-  && apt-get install -y ${BUILD_DEPS} --no-install-recommends \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y ${BUILD_DEPS} --no-install-recommends \
   # Install mongo-c-driver
   && cd /tmp \
   && wget https://github.com/mongodb/mongo-c-driver/releases/download/${LIB_MONGOC_VERSION}/mongo-c-driver-${LIB_MONGOC_VERSION}.tar.gz \
