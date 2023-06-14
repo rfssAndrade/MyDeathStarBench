@@ -1,3 +1,6 @@
+find_package(opentelemetry-cpp CONFIG REQUIRED)
+find_package(gRPC CONFIG REQUIRED)
+
 add_executable(
     UniqueIdService
     UniqueIdService.cpp
@@ -9,6 +12,7 @@ add_executable(
 target_include_directories(
     UniqueIdService PRIVATE
     /usr/local/include/jaegertracing
+    ${OPENTELEMETRY_CPP_INCLUDE_DIRS}
 )
 
 target_link_libraries(
@@ -20,6 +24,7 @@ target_link_libraries(
     Boost::log
     Boost::log_setup
     jaegertracing
+    ${OPENTELEMETRY_CPP_LIBRARIES}
 )
 
 install(TARGETS UniqueIdService DESTINATION ./)

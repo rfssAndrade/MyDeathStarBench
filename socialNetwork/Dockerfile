@@ -3,12 +3,12 @@ FROM andraderf/thriftot AS builder
 ARG LIB_REDIS_PLUS_PLUS_VERSION=1.2.3
 
 # Apply patch and re-install Redis plus plus
-RUN cd /tmp/redis-plus-plus\
-&& sed -i '/Transaction transaction/i\\    ShardsPool* get_shards_pool(){\n        return &_pool;\n    }\n' \
-   src/sw/redis++/redis_cluster.h \
-&& cmake -DREDIS_PLUS_PLUS_USE_TLS=ON . \
-&& make -j$(nproc) \
-&& make install
+# RUN cd /tmp/redis-plus-plus\
+# && sed -i '/Transaction transaction/i\\    ShardsPool* get_shards_pool(){\n        return &_pool;\n    }\n' \
+#    src/sw/redis++/redis_cluster.h \
+# && cmake -DREDIS_PLUS_PLUS_USE_TLS=ON . \
+# && make -j$(nproc) \
+# && make install
 
 COPY ./ /social-network-microservices
 RUN cd /social-network-microservices \
