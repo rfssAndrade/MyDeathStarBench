@@ -151,5 +151,29 @@ RUN apt-get update \
     AMQP-CPP \
     SimpleAmqpClient
 
+RUN apt-get install curl libcurl4-openssl-dev
+
+RUN git clone -b v1.49.2 https://github.com/grpc/grpc /usr/src/grpc \
+    && cd /usr/src/grpc \
+    && git submodule update --init \
+    && mkdir -p cmake/build \
+    && cd cmake/build \
+    && cmake ../.. -DgRPC_INSTALL=ON \
+    && make -j$(nproc) \
+    && make install \
+    && rm -rf /usr/src/grpc
+
+RUN git clone --recursive https://github.com/open-telemetry/opentelemetry-cpp /usr/src/opentelemetry-cpp \
+    && mkdir -p /usr/src/opentelemetry-cpp/build && cd /usr/src/opentelemetry-cpp \
+    && git checkout v1.9.0 \
+    && cd build \
+   && cmake .. -DCMAKE_CXX_STANDARD=17 -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+				-DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF \
+				-DWITH_EXAMPLES=OFF -DWITH_OTLP=ON -DWITH_OTLP_GRPC=ON \
+   && cmake --build . --target all \
+   && cmake --install . \
+   && rm -rf /usr/src/opentelemetry-cpp
+
+
 ENV LD_LIBRARY_PATH /usr/local/lib:${LD_LIBRARY_PATH}
 RUN ldconfig
