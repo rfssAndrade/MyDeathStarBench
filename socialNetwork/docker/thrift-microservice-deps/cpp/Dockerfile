@@ -169,7 +169,7 @@ RUN git clone --recursive https://github.com/open-telemetry/opentelemetry-cpp /u
     && cd build \
    && cmake .. -DCMAKE_CXX_STANDARD=17 -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 				-DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF \
-				-DWITH_EXAMPLES=OFF -DWITH_OTLP=ON -DWITH_OTLP_GRPC=ON \
+				-DWITH_EXAMPLES=OFF -DWITH_OTLP=ON -DWITH_OTLP_GRPC=ON -DWITH_OTLP_HTTP=ON -DWITH_PROMETHEUS=ON \
    && cmake --build . --target all \
    && cmake --install . \
    && rm -rf /usr/src/opentelemetry-cpp
